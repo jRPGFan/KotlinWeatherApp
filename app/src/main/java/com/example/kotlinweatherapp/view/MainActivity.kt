@@ -3,6 +3,7 @@ package com.example.kotlinweatherapp.view
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.kotlinweatherapp.R
+import com.example.kotlinweatherapp.view.main.MainFragment
 
 class MainActivity : AppCompatActivity() {
    override fun onCreate(savedInstanceState: Bundle?) {
