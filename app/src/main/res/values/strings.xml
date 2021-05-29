@@ -8,4 +8,5 @@
     <string name="week_day_temperature">Day</string>
     <string name="week_night_temperature">Night</string>
     <string name="FAB_description">Russian Cities / World Capitals Switcher</string>
+    <string name="Unknown_Error">Unknown Error</string>
 </resources>

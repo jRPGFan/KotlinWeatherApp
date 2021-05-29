@@ -36,16 +36,18 @@ class DetailsFragmentAdapter : RecyclerView.Adapter<DetailsFragmentAdapter.Detai
 
     inner class DetailsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind(weather: WeatherForAWeek) {
-            itemView.findViewById<TextView>(R.id.DaysContainerDayOfWeek).text =
+            itemView.apply{
+            findViewById<TextView>(R.id.DaysContainerDayOfWeek).text =
                 weather.dayOfWeek.name
-            itemView.findViewById<TextView>(R.id.DaysContainerDayTemperature).text =
+            findViewById<TextView>(R.id.DaysContainerDayTemperature).text =
                 weather.dayTemperature.toString()
-            itemView.findViewById<TextView>(R.id.DaysContainerNightTemperature).text =
+            findViewById<TextView>(R.id.DaysContainerNightTemperature).text =
                 weather.nightTemperature.toString()
-            itemView.findViewById<TextView>(R.id.DaysContainerWeatherCondition).text =
+            findViewById<TextView>(R.id.DaysContainerWeatherCondition).text =
                 weather.conditions.description
-            itemView.findViewById<LinearLayout>(R.id.daysContainerLinearLayout)
+            findViewById<LinearLayout>(R.id.daysContainerLinearLayout)
                 .setBackgroundResource(weather.conditions.resID)
+            }
         }
     }
 }

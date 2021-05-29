@@ -5,14 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.kotlinweatherapp.R
 import com.example.kotlinweatherapp.databinding.FragmentDetailsBinding
 import com.example.kotlinweatherapp.model.Weather
 import com.example.kotlinweatherapp.viewmodel.AppState
 import com.example.kotlinweatherapp.viewmodel.DetailsViewModel
-import com.example.kotlinweatherapp.viewmodel.MainViewModel
 import com.google.android.material.snackbar.Snackbar
 
 class DetailsFragment : Fragment() {
@@ -30,26 +28,26 @@ class DetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val weather = arguments?.getParcelable<Weather>(BUNDLE_EXTRA)
-        if (weather != null) setData(weather)
-        binding.detailsFragmentRecyclerView.adapter = adapter
+        arguments?.getParcelable<Weather>(BUNDLE_EXTRA)?.let { weather ->
+        weather.city.also { city ->
+            binding.cityName.text = city.city
+            binding.cityCoordinates.text = String.format(
+                binding.cityCoordinates.text.toString(),
+                city.lat.toString(), city.lon.toString()
+            )
+        }
+            binding.temperatureValue.text = weather.temperature.toString()
+            binding.feelsLikeValue.text = weather.feelsLike.toString()
+            binding.weatherDescription.text = weather.conditions.description
+            binding.mainView.setBackgroundResource(weather.conditions.resID)
 
-        viewModel = ViewModelProvider(this).get(DetailsViewModel::class.java)
-        viewModel.getLiveData().observe(viewLifecycleOwner, {
-            renderData(it) })
-        viewModel.getWeekWeatherFromLocalSource()
-    }
+            binding.detailsFragmentRecyclerView.adapter = adapter
 
-    private fun setData(weatherData: Weather) {
-        binding.cityName.text = weatherData.city.city
-        binding.cityCoordinates.text = String.format(
-            binding.cityCoordinates.text.toString(),
-            weatherData.city.lat.toString(), weatherData.city.lon.toString())
-
-        binding.temperatureValue.text = weatherData.temperature.toString()
-        binding.feelsLikeValue.text = weatherData.feelsLike.toString()
-        binding.weatherDescription.text = weatherData.conditions.description
-        binding.mainView.setBackgroundResource(weatherData.conditions.resID)
+            viewModel = ViewModelProvider(this).get(DetailsViewModel::class.java)
+            viewModel.getLiveData().observe(viewLifecycleOwner, {
+                renderData(it) })
+            viewModel.getWeekWeatherFromLocalSource()
+        }
     }
 
     private fun renderData(appState: AppState) {
@@ -59,9 +57,19 @@ class DetailsFragment : Fragment() {
             }
             is AppState.ErrorWeek -> {
                 Snackbar.make(binding.mainView, getString(R.string.error),
-                    Snackbar.LENGTH_INDEFINITE).show()
+                    Snackbar.LENGTH_SHORT).show()
             }
+            is AppState.Loading -> {
+                binding.mainView.visibility = View.VISIBLE
+            }
+            else -> Snackbar.make(binding.mainView, "Unknown Error",
+                        Snackbar.LENGTH_SHORT).show()
         }
+    }
+
+    override fun onDestroy() {
+        _binding = null
+        super.onDestroy()
     }
 
     companion object {
@@ -74,35 +82,3 @@ class DetailsFragment : Fragment() {
         }
     }
 }
-//    override fun onDestroyView() {
-//        super.onDestroyView()
-//        _binding = null
-//    }
-//
-//    override fun onActivityCreated(savedInstanceState: Bundle?) {
-//        super.onActivityCreated(savedInstanceState)
-//        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-//        viewModel.getLiveData().observe(viewLifecycleOwner, Observer { renderData(it)})
-//        viewModel.getWeather()
-//    }
-//
-//    private fun renderData(appState: AppState) {
-//        when (appState) {
-//            is AppState.Success -> {
-//                val weatherData = appState.weatherData
-//                binding.loadingLayout.visibility = View.GONE
-//                setData(weatherData)
-//            }
-//            is AppState.Loading -> {
-//                binding.loadingLayout.visibility = View.VISIBLE
-//            }
-//            is AppState.Error -> {
-//                binding.loadingLayout.visibility = View.GONE
-//                Snackbar
-//                    .make(binding.mainView, "Error", Snackbar.LENGTH_INDEFINITE)
-//                    .setAction("Reload") { viewModel.getWeather() }
-//                    .show()
-//            }
-//        }
-//    }
-//
