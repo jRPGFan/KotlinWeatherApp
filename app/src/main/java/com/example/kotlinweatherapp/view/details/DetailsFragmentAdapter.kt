@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlinweatherapp.R
 import com.example.kotlinweatherapp.model.WeatherForAWeek
-import org.w3c.dom.Text
 
 class DetailsFragmentAdapter : RecyclerView.Adapter<DetailsFragmentAdapter.DetailsViewHolder>() {
 
@@ -50,4 +49,6 @@ class DetailsFragmentAdapter : RecyclerView.Adapter<DetailsFragmentAdapter.Detai
             }
         }
     }
+    //convert day to day of week
+    // LocalDate.parse(weather.date).dayOfWeek.toString()
 }

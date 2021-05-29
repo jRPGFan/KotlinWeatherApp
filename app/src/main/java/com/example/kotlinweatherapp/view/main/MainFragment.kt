@@ -19,13 +19,14 @@ class MainFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: MainViewModel by lazy {
-        ViewModelProvider(this).get(MainViewModel::class.java) }
+        ViewModelProvider(this).get(MainViewModel::class.java)
+    }
     private var isDataSetRus: Boolean = true
     private val adapter = MainFragmentAdapter(object : OnItemViewClickListener {
         override fun onItemViewClick(weather: Weather) {
             activity?.supportFragmentManager?.apply {
                 beginTransaction()
-                    .add(R.id.container, DetailsFragment.newInstance(Bundle().apply {
+                    .replace(R.id.container, DetailsFragment.newInstance(Bundle().apply {
                         putParcelable(DetailsFragment.BUNDLE_EXTRA, weather)
                     }))
                     .addToBackStack("")
@@ -34,8 +35,10 @@ class MainFragment : Fragment() {
         }
     })
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -46,7 +49,8 @@ class MainFragment : Fragment() {
         binding.mainFragmentFAB.setOnClickListener { changeWeatherDataSet() }
 
         viewModel.getLiveData().observe(viewLifecycleOwner, {
-            renderData(it) })
+            renderData(it)
+        })
         viewModel.getWeatherFromLocalSourceRus()
     }
 
@@ -100,7 +104,7 @@ class MainFragment : Fragment() {
     private fun View.showSnackBarNoAction(
         message: String,
         length: Int
-    ){
+    ) {
         Snackbar.make(this, message, length).show()
     }
 

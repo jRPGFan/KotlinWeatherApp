@@ -10,8 +10,8 @@ data class Weather(
     val city: City = getDefaultCity(),
     val temperature: Int = 13,
     val feelsLike: Int = 11,
-    val conditions: WeatherConditions = getDefaultWeather(),
-    val weatherForAWeek: List<WeatherForAWeek> = getCityWeatherForAWeekLocalSource()
+    val conditions: String = "clear",
+    val weatherForAWeek: List<WeatherForAWeek> = getCityWeatherForAWeekLocalSource(),
 ) : Parcelable
 
 fun getDefaultCity() = City("Кишинёв", 47.022778, 28.835278)
@@ -25,33 +25,55 @@ private var list = listOf(
     WeatherConditions("Snowy", R.drawable.snowy)
 )
 
+var weatherList = mapOf(
+    "clear" to R.drawable.sunny,
+    "partly-cloudy" to R.drawable.cloudy,
+    "cloudy" to R.drawable.cloudy,
+    "overcast" to R.drawable.cloudy,
+    "drizzle" to R.drawable.rain,
+    "light-rain" to R.drawable.rain,
+    "rain" to R.drawable.rain,
+    "moderate-rain" to R.drawable.rain,
+    "heavy-rain" to R.drawable.rain,
+    "continuous-heavy-rain" to R.drawable.rain,
+    "showers" to R.drawable.rain,
+    "wet-snow" to R.drawable.snowy,
+    "light-snow" to R.drawable.snowy,
+    "snow" to R.drawable.snowy,
+    "snow-showers" to R.drawable.snowy,
+    "hail" to R.drawable.snowy,
+    "thunderstorm" to R.drawable.rain,
+    "thunderstorm-with-rain" to R.drawable.rain,
+    "thunderstorm-with-hail" to R.drawable.rain
+)
+
 fun getRandomWeather() : WeatherConditions {
     return list[Random.nextInt(0,4)]
 }
 
 fun getWorldCities() = listOf(
-        Weather(City("Лондон", 51.5085300, -0.1257400), 1, 2),
-        Weather(City("Токио", 35.6895000, 139.6917100), 3, 4),
-        Weather(City("Париж", 48.8534100, 2.3488000), 5, 6),
-        Weather(City("Берлин", 52.52000659999999, 13.404953999999975), 7, 8),
-        Weather(City("Рим", 41.9027835, 12.496365500000024), 9, 10),
-        Weather(City("Минск", 53.90453979999999, 27.561524400000053), 11, 12),
-        Weather(City("Стамбул", 41.0082376, 28.97835889999999), 13, 14),
-        Weather(City("Вашингтон", 38.9071923, -77.03687070000001), 15, 16),
-        Weather(City("Киев", 50.4501, 30.523400000000038), 17, 18),
-        Weather(City("Пекин", 39.90419989999999, 116.40739630000007), 19, 20)
+        Weather(City("London", 51.507222, -0.1275), 1, 2, "clear"),
+        Weather(City("Tokyo", 35.689722, 139.692222), 3, 4, "clear"),
+        Weather(City("Paris", 48.856613, 2.352222), 5, 6, "clear"),
+        Weather(City("Berlin", 52.52, 13.405), 7, 8, "clear"),
+        Weather(City("Rome", 41.883333, 12.5), 9, 10, "clear"),
+        Weather(City("Minsk", 53.9, 27.566667), 11, 12, "clear"),
+        Weather(City("Istanbul", 41.013611, 28.955), 13, 14, "clear"),
+        Weather(City("New York", 40.712778, -74.006111), 15, 16, "clear"),
+        Weather(City("Kiev", 50.45, 30.523333), 17, 18, "clear"),
+        Weather(City("Beijing", 39.906667, 116.3975), 19, 20, "clear"),
+        Weather(City("Chisinau", 47.022778, 28.835278), 21, 15, "clear")
 )
 
 fun getRussianCities() = listOf(
-        Weather(City("Москва", 55.755826, 37.617299900000035), 1, 2),
-        Weather(City("Санкт-Петербург", 59.9342802, 30.335098600000038), 3, 3),
-        Weather(City("Новосибирск", 55.00835259999999, 82.93573270000002), 5, 6),
-        Weather(City("Екатеринбург", 56.83892609999999, 60.60570250000001), 7,
-            8),
-        Weather(City("Нижний Новгород", 56.2965039, 43.936059), 9, 10),
-        Weather(City("Казань", 55.8304307, 49.06608060000008), 11, 12),
-        Weather(City("Челябинск", 55.1644419, 61.4368432), 13, 14),
-        Weather(City("Омск", 54.9884804, 73.32423610000001), 15, 16),
-        Weather(City("Ростов-на-Дону", 47.2357137, 39.701505), 17, 18),
-        Weather(City("Уфа", 54.7387621, 55.972055400000045), 19, 20)
+        Weather(City("Москва", 55.755833, 37.617222), 1, 2, "clear"),
+        Weather(City("Санкт-Петербург", 59.9375, 30.308611), 3, 3, "clear"),
+        Weather(City("Новосибирск", 55.05, 82.95), 5, 6, "clear"),
+        Weather(City("Екатеринбург", 56.835556, 60.612778), 7,8, "clear"),
+        Weather(City("Нижний Новгород", 56.326944, 44.0075), 9, 10, "clear"),
+        Weather(City("Казань", 55.796389, 49.108889), 11, 12, "clear"),
+        Weather(City("Челябинск", 55.154722, 61.375833), 13, 14, "clear"),
+        Weather(City("Омск", 54.983333, 73.366667), 15, 16, "clear"),
+        Weather(City("Ростов-на-Дону", 47.233333, 39.7), 17, 18, "clear"),
+        Weather(City("Уфа", 54.733333, 56.0), 19, 20, "clear")
 )
