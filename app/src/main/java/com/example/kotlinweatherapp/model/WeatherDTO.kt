@@ -1,8 +1,7 @@
 package com.example.kotlinweatherapp.model
 
 data class WeatherDTO(
-    val fact: FactDTO?,
-    val forecast: ForecastDTO?
+    val fact: FactDTO?
 )
 
 data class FactDTO(

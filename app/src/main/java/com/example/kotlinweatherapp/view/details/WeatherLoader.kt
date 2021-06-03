@@ -20,7 +20,7 @@ class WeatherLoader(
     private val listener: WeatherLoaderListener, private val lat: Double,
     private val lon: Double
 ) {
-    @RequiresApi(Build.VERSION_CODES.Q)
+    @RequiresApi(Build.VERSION_CODES.N)
     fun loadWeather() {
         try {
             val uri = URL("https://api.weather.yandex.ru/v2/informers?lat=${lat}&lon=${lon}")
@@ -59,7 +59,7 @@ class WeatherLoader(
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.Q)
+    @RequiresApi(Build.VERSION_CODES.N)
     private fun getLines(reader: BufferedReader): String {
         return reader.lines().collect(Collectors.joining("\n"))
     }
