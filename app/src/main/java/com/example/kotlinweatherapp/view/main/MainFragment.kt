@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.kotlinweatherapp.R
 import com.example.kotlinweatherapp.databinding.FragmentMainBinding
 import com.example.kotlinweatherapp.model.Weather
+import com.example.kotlinweatherapp.utilities.showSnackbar
+import com.example.kotlinweatherapp.utilities.showSnackbarNoAction
 import com.example.kotlinweatherapp.view.details.DetailsFragment
 import com.example.kotlinweatherapp.viewmodel.AppState
 import com.example.kotlinweatherapp.viewmodel.MainViewModel
@@ -80,32 +82,16 @@ class MainFragment : Fragment() {
             }
             is AppState.Error -> {
                 binding.mainFragmentLoadingLayout.visibility = View.GONE
-                binding.mainFragmentRootView.showSnackBar(
+                binding.mainFragmentRootView.showSnackbar(
                     getString(R.string.error),
                     getString(R.string.reload),
                     { viewModel.getWeatherFromLocalSourceRus() })
             }
-            else -> binding.mainFragmentRootView.showSnackBarNoAction(
+            else -> binding.mainFragmentRootView.showSnackbarNoAction(
                 getString(R.string.Unknown_Error),
                 Snackbar.LENGTH_SHORT
             )
         }
-    }
-
-    private fun View.showSnackBar(
-        text: String,
-        actionText: String,
-        action: (View) -> Unit,
-        length: Int = Snackbar.LENGTH_SHORT
-    ) {
-        Snackbar.make(this, text, length).setAction(actionText, action).show()
-    }
-
-    private fun View.showSnackBarNoAction(
-        message: String,
-        length: Int
-    ) {
-        Snackbar.make(this, message, length).show()
     }
 
     interface OnItemViewClickListener {

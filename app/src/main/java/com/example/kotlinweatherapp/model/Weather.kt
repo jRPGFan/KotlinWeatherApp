@@ -11,6 +11,7 @@ data class Weather(
     val temperature: Int = 13,
     val feelsLike: Int = 11,
     val conditions: String = "clear",
+    val icon: String? = "bkn_n",
     val weatherForAWeek: List<WeatherForAWeek> = getCityWeatherForAWeekLocalSource(),
 ) : Parcelable
 

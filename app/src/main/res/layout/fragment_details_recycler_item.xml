@@ -4,12 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/daysContainer"
-    android:layout_width="151dp"
-    android:layout_height="240dp">
+    android:layout_width="121dp"
+    android:layout_height="180dp">
 
     <LinearLayout
         android:id="@+id/daysContainerLinearLayout"
-        android:layout_width="150dp"
+        android:layout_width="120dp"
         android:layout_height="match_parent"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,20 +41,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Day"/>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/DaysContainerDayTemperature"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/recycler_item_padding"
-            android:textSize="@dimen/details_recycler_item_text_size"
-            android:textColor="@color/white"
-            android:textAlignment="center"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="+25"/>
+        tools:text="Day: +25"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/DaysContainerNight"
@@ -68,20 +55,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Night"/>
+        tools:text="Night: +15"/>
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/DaysContainerNightTemperature"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/recycler_item_padding"
-        android:textSize="@dimen/details_recycler_item_text_size"
-        android:textColor="@color/white"
-        android:textAlignment="center"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="+15"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/DaysContainerWeatherCondition"

@@ -1,6 +1,9 @@
-package com.example.kotlinweatherapp.model
+package com.example.kotlinweatherapp.repository
 
-interface Repository {
+import com.example.kotlinweatherapp.model.Weather
+import com.example.kotlinweatherapp.model.WeatherForAWeek
+
+interface MainRepository {
     fun getWeatherFromServer(): Weather
     fun getWeatherFromLocalStorageRus(): List<Weather>
     fun getWeatherFromLocalStorageWorld(): List<Weather>

@@ -1,6 +1,5 @@
 package com.example.kotlinweatherapp.viewmodel
 
-import com.example.kotlinweatherapp.model.ForecastDTO
 import com.example.kotlinweatherapp.model.Weather
 import com.example.kotlinweatherapp.model.WeatherForAWeek
 

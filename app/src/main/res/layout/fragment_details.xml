@@ -11,6 +11,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/headerIcon"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/town_header_height"
+            android:scaleType="fitXY"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/cityName"
             android:layout_width="wrap_content"
@@ -21,7 +30,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/headerIcon"
             tools:text="Кишинёв" />
 
         <TextView
@@ -37,7 +46,7 @@
             tools:text="lt/ln: 47.022778, 28.835278" />
 
         <TextView
-            android:id="@+id/temperatureLabel"
+            android:id="@+id/temperature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_15_dp"
@@ -48,20 +57,7 @@
             app:layout_constraintTop_toBottomOf="@+id/cityCoordinates" />
 
         <TextView
-            android:id="@+id/temperatureValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_15_dp"
-            android:textColor="@color/white"
-            android:textSize="@dimen/temperature_value_text_size"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/temperatureLabel"
-            tools:text="+13" />
-
-        <TextView
-            android:id="@+id/feelsLikeLabel"
+            android:id="@+id/feelsLike"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_15_dp"
@@ -69,20 +65,17 @@
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/temperatureValue" />
+            app:layout_constraintTop_toBottomOf="@+id/temperature" />
 
-        <TextView
-            android:id="@+id/feelsLikeValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/weatherIcon"
+            android:layout_width="@dimen/weather_icon_width"
+            android:layout_height="@dimen/weather_icon_height"
             android:layout_marginTop="@dimen/margin_15_dp"
-            android:textColor="@color/white"
-            android:textSize="@dimen/feels_like_text_size"
-            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/feelsLikeLabel"
-            tools:text="+11" />
+            app:layout_constraintTop_toBottomOf="@+id/feelsLike"
+            tools:srcCompat="@drawable/ic_bkn_d" />
 
         <TextView
             android:id="@+id/weatherDescription"
@@ -94,7 +87,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/feelsLikeValue"
+            app:layout_constraintTop_toBottomOf="@+id/weatherIcon"
             tools:text="Miserable" />
 
         <androidx.recyclerview.widget.RecyclerView

@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">KotlinWeatherApp</string>
-    <string name="temperature_label">Temperature</string>
-    <string name="feels_like_label">Feels like</string>
+    <string name="temperature_label">Temperature: %s</string>
+    <string name="feels_like_label">Feels like: %s</string>
     <string name="city_coordinates">lt/ln: %s, %s</string>
     <string name="error">Error</string>
     <string name="reload">Reload</string>
-    <string name="week_day_temperature">Day</string>
-    <string name="week_night_temperature">Night</string>
+    <string name="week_day_temperature">Day: %s</string>
+    <string name="week_night_temperature">Night: %s</string>
     <string name="FAB_description">Russian Cities / World Capitals Switcher</string>
     <string name="Unknown_Error">Unknown Error</string>
     <string name="threads">Threads</string>

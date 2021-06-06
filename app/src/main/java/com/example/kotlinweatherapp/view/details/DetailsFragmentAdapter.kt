@@ -38,10 +38,10 @@ class DetailsFragmentAdapter : RecyclerView.Adapter<DetailsFragmentAdapter.Detai
             itemView.apply{
             findViewById<TextView>(R.id.DaysContainerDayOfWeek).text =
                 weather.dayOfWeek.name
-            findViewById<TextView>(R.id.DaysContainerDayTemperature).text =
-                weather.dayTemperature.toString()
-            findViewById<TextView>(R.id.DaysContainerNightTemperature).text =
-                weather.nightTemperature.toString()
+            findViewById<TextView>(R.id.DaysContainerDay).text = String.format(
+                resources.getString(R.string.week_day_temperature), weather.dayTemperature.toString())
+            findViewById<TextView>(R.id.DaysContainerNight).text = String.format(
+                resources.getString(R.string.week_night_temperature), weather.nightTemperature.toString())
             findViewById<TextView>(R.id.DaysContainerWeatherCondition).text =
                 weather.conditions.description
             findViewById<LinearLayout>(R.id.daysContainerLinearLayout)

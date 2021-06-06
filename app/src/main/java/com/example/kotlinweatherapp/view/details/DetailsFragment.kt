@@ -1,45 +1,25 @@
 package com.example.kotlinweatherapp.view.details
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
-import android.os.Build
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import coil.ImageLoader
+import coil.load
 import com.example.kotlinweatherapp.R
 import com.example.kotlinweatherapp.databinding.FragmentDetailsBinding
-import com.example.kotlinweatherapp.model.FactDTO
 import com.example.kotlinweatherapp.model.Weather
-import com.example.kotlinweatherapp.model.WeatherDTO
 import com.example.kotlinweatherapp.model.weatherList
+import com.example.kotlinweatherapp.utilities.showSnackbarNoAction
 import com.example.kotlinweatherapp.viewmodel.AppState
 import com.example.kotlinweatherapp.viewmodel.DetailsViewModel
+//import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYou
+//import com.github.twocoffeesoneteam.glidetovectoryou.SvgDecoder
 import com.google.android.material.snackbar.Snackbar
-
-const val DETAILS_INTENT_FILTER = "DETAILS INTENT FILTER"
-const val DETAILS_LOAD_RESULT_EXTRA = "LOAD RESULT"
-const val DETAILS_INTENT_EMPTY_EXTRA = "INTENT IS EMPTY"
-const val DETAILS_DATA_EMPTY_EXTRA = "DATA IS EMPTY"
-const val DETAILS_RESPONSE_EMPTY_EXTRA = "RESPONSE IS EMPTY"
-const val DETAILS_REQUEST_ERROR_EXTRA = "REQUEST ERROR"
-const val DETAILS_REQUEST_ERROR_MESSAGE_EXTRA = "REQUEST ERROR MESSAGE"
-const val DETAILS_URL_MALFORMED_EXTRA = "URL MALFORMED"
-const val DETAILS_URL_MALFORMED_MESSAGE_EXTRA = "URL MALFORMED MESSAGE"
-const val DETAILS_RESPONSE_SUCCESS_EXTRA = "RESPONSE SUCCESS"
-const val DETAILS_TEMP_EXTRA = "TEMPERATURE"
-const val DETAILS_FEELS_LIKE_EXTRA = "FEELS LIKE"
-const val DETAILS_CONDITION_EXTRA = "CONDITION"
-private const val TEMP_INVALID = -100
-private const val FEELS_LIKE_INVALID = -100
-private const val CONDITION_INVALID = "DREADFUL"
-private const val PROCESS_ERROR = "ERROR PROCESSING"
+import kotlinx.android.synthetic.main.fragment_details.*
 
 class DetailsFragment : Fragment() {
 
@@ -51,51 +31,8 @@ class DetailsFragment : Fragment() {
         ViewModelProvider(this).get(DetailsViewModel::class.java)
     }
 
-    private lateinit var weatherBundle: Weather
-//    private val weatherBundle: Weather by lazy {
-//        arguments?.getParcelable(BUNDLE_EXTRA) ?: Weather()
-//    }
-
-    private val loadResultsReceiver: BroadcastReceiver = object :
-        BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            when (intent.getStringExtra(DETAILS_LOAD_RESULT_EXTRA)) {
-                DETAILS_INTENT_EMPTY_EXTRA -> TODO(PROCESS_ERROR)
-                DETAILS_DATA_EMPTY_EXTRA -> TODO(PROCESS_ERROR)
-                DETAILS_RESPONSE_EMPTY_EXTRA -> TODO(PROCESS_ERROR)
-                DETAILS_REQUEST_ERROR_EXTRA -> TODO(PROCESS_ERROR)
-                DETAILS_REQUEST_ERROR_MESSAGE_EXTRA -> TODO(PROCESS_ERROR)
-                DETAILS_URL_MALFORMED_EXTRA -> TODO(PROCESS_ERROR)
-                DETAILS_RESPONSE_SUCCESS_EXTRA -> renderData(
-                    WeatherDTO(
-                        FactDTO(
-                            intent.getIntExtra(
-                                DETAILS_TEMP_EXTRA, TEMP_INVALID
-                            ),
-                            intent.getIntExtra(
-                                DETAILS_FEELS_LIKE_EXTRA,
-                                FEELS_LIKE_INVALID
-                            ),
-                            intent.getStringExtra(
-                                DETAILS_CONDITION_EXTRA
-                            )
-                        )
-                    )
-                )
-                else -> TODO(PROCESS_ERROR)
-            }
-        }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        context?.let {
-            LocalBroadcastManager.getInstance(it)
-                .registerReceiver(
-                    loadResultsReceiver,
-                    IntentFilter(DETAILS_INTENT_FILTER)
-                )
-        }
+    private val weatherBundle: Weather by lazy {
+        arguments?.getParcelable(BUNDLE_EXTRA) ?: Weather()
     }
 
     override fun onCreateView(
@@ -108,59 +45,98 @@ class DetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        weatherBundle = arguments?.getParcelable(BUNDLE_EXTRA) ?: Weather()
         binding.detailsFragmentRecyclerView.adapter = adapter
-        getWeather()
+        viewModel.getLiveData().observe(viewLifecycleOwner, {
+            renderData(it)
+        })
+        viewModel.getWeatherFromRemoteSource(weatherBundle.city.lat, weatherBundle.city.lon)
     }
 
-    private fun getWeather() {
-        context?.let {
-            it.startService(Intent(it, DetailsService::class.java).apply {
-                putExtra(
-                    LATITUDE_EXTRA,
-                    weatherBundle.city.lat
+    private fun renderData(appState: AppState) {
+        when (appState) {
+            is AppState.Success -> {
+                binding.mainView.visibility = View.VISIBLE
+                binding.loadingLayout.visibility = View.GONE
+                setWeather(appState.weatherData[0])
+            }
+            is AppState.Loading -> {
+                binding.mainView.visibility = View.GONE
+                binding.loadingLayout.visibility = View.VISIBLE
+            }
+            is AppState.Error -> {
+                binding.mainView.showSnackbarNoAction(
+                    getString(R.string.Unknown_Error),
+                    Snackbar.LENGTH_SHORT
                 )
-                putExtra(
-                    LONGITUDE_EXTRA,
-                    weatherBundle.city.lon
-                )
-            })
+            }
+            is AppState.SuccessWeek -> {
+            }
+            is AppState.ErrorWeek -> {
+                Snackbar.make(
+                    binding.mainView, getString(R.string.error),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
         }
     }
 
-    private fun renderData(weatherDTO: WeatherDTO) {
-        val fact = weatherDTO.fact
-        val temp = fact?.temp ?: TEMP_INVALID
-        val feelsLike = fact?.feels_like ?: FEELS_LIKE_INVALID
-        val condition = fact?.condition ?: CONDITION_INVALID
-        if (temp == TEMP_INVALID || feelsLike == FEELS_LIKE_INVALID ||
-            condition == CONDITION_INVALID
-        ) {
-            TODO(PROCESS_ERROR)
-        } else {
-            val city = weatherBundle.city
-            with(binding) {
-                cityName.text = city.city
-                cityCoordinates.text = String.format(
-                    getString(R.string.city_coordinates),
-                    city.lat.toString(),
-                    city.lon.toString()
+    private fun setWeather(weather: Weather) {
+
+//        Picasso
+//            .get()
+//            .load("https://freepngimg.com/thumb/city/36275-3-city-hd.png")
+//            .into(headerIcon)
+
+        headerIcon.load("https://freepngimg.com/thumb/city/36275-3-city-hd.png")
+
+        val city = weatherBundle.city
+        with(binding) {
+            cityName.text = city.city
+            binding.cityCoordinates.text = String.format(
+                getString(R.string.city_coordinates),
+                city.lat.toString(), city.lon.toString()
+            )
+            temperature.text = String.format(
+                getString(R.string.temperature_label), weather.temperature.toString()
+            )
+            feelsLike.text = String.format(
+                getString(R.string.feels_like_label), weather.feelsLike.toString()
+            )
+
+//            weather.icon?.let {
+//                GlideToVectorYou.justLoadImage(
+//                    activity,
+//                    Uri.parse("https://yastatic.net/weather/i/icons/blueye/color/svg/${it}.svg"),
+//                    weatherIcon
+//                )
+//            }
+
+            weather.icon?.let {
+                val svgImageLoader = ImageLoader.Builder(requireContext())
+                    .componentRegistry {
+                        add(coil.decode.SvgDecoder(requireContext()))
+                    }
+                    .build()
+
+                weatherIcon.load(
+                    "https://yastatic.net/weather/i/icons/blueye/color/svg/${it}.svg",
+                    svgImageLoader
                 )
-                temperatureValue.text = temp.toString()
-                feelsLikeValue.text = feelsLike.toString()
-                weatherDescription.text = condition
-                weatherList[condition]?.let { mainView.setBackgroundResource(it) }
-                viewModel.getLiveData().observe(viewLifecycleOwner, {
-                    renderWeekData(it)
-                })
-                viewModel.getWeekWeatherFromLocalSource()
             }
+
+            weatherDescription.text = weather.conditions
+            weatherList[weather.conditions]?.let { mainView.setBackgroundResource(it) }
+            viewModel.getLiveData().observe(viewLifecycleOwner, {
+                renderWeekData(it)
+            })
+            viewModel.getWeekWeatherFromLocalSource()
         }
     }
 
     private fun renderWeekData(appState: AppState) {
         when (appState) {
             is AppState.SuccessWeek -> {
+                binding.loadingLayout.visibility = View.GONE
                 adapter.setWeekWeather(appState.weatherForAWeek)
             }
             is AppState.ErrorWeek -> {
@@ -182,13 +158,6 @@ class DetailsFragment : Fragment() {
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
-    }
-
-    override fun onDestroy() {
-        context?.let {
-            LocalBroadcastManager.getInstance(it).unregisterReceiver(loadResultsReceiver)
-        }
-        super.onDestroy()
     }
 
     companion object {

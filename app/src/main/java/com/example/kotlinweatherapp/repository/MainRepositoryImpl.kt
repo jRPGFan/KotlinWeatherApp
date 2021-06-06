@@ -1,6 +1,8 @@
-package com.example.kotlinweatherapp.model
+package com.example.kotlinweatherapp.repository
 
-class RepositoryImpl : Repository {
+import com.example.kotlinweatherapp.model.*
+
+class MainRepositoryImpl : MainRepository {
     override fun getWeatherFromServer() =  Weather()
 
     override fun getWeatherFromLocalStorageRus() = getRussianCities()
