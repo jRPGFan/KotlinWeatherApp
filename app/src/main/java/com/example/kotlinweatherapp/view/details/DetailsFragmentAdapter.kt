@@ -19,6 +19,7 @@ class DetailsFragmentAdapter : RecyclerView.Adapter<DetailsFragmentAdapter.Detai
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DetailsFragmentAdapter.DetailsViewHolder {
+
         return DetailsViewHolder(
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.fragment_details_recycler_item, parent, false) as View

@@ -2,8 +2,12 @@ package com.example.kotlinweatherapp.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.kotlinweatherapp.app.App.Companion.getHistoryDao
+import com.example.kotlinweatherapp.app.App.Companion.getNoteDao
+import com.example.kotlinweatherapp.model.Weather
 import com.example.kotlinweatherapp.model.WeatherDTO
 import com.example.kotlinweatherapp.repository.*
+import com.example.kotlinweatherapp.room.NoteEntity
 import com.example.kotlinweatherapp.utilities.convertDtoToModel
 import retrofit2.Callback
 import retrofit2.Call
@@ -15,9 +19,10 @@ private const val CORRUPTED_DATA = "Corrupted data"
 
 class DetailsViewModel(
     private val detailsLiveData: MutableLiveData<AppState> = MutableLiveData(),
-    private val detailsRepositoryImpl: DetailsRepository =
+    private val detailsRepository: DetailsRepository =
         DetailsRepositoryImpl(RemoteDataSource()),
-    private val mainRepositoryImpl: MainRepository = MainRepositoryImpl()
+    private val mainRepository: MainRepository = MainRepositoryImpl(),
+    private val historyRepository: LocalRepository = LocalRepositoryImpl(getHistoryDao())
 ) : ViewModel() {
 
     fun getLiveData() = detailsLiveData
@@ -25,7 +30,11 @@ class DetailsViewModel(
 
     fun getWeatherFromRemoteSource(lat: Double, lon: Double) {
         detailsLiveData.value = AppState.Loading
-        detailsRepositoryImpl.getWeatherDetailsFromServer(lat, lon, callBack)
+        detailsRepository.getWeatherDetailsFromServer(lat, lon, callBack)
+    }
+
+    fun saveCityToDB(weather: Weather) {
+        historyRepository.saveEntity(weather)
     }
 
     private val callBack = object : Callback<WeatherDTO> {
@@ -63,7 +72,7 @@ class DetailsViewModel(
         Thread {
             detailsLiveData.postValue(
                 AppState.SuccessWeek(
-                    mainRepositoryImpl.getCityWeatherForAWeekFromLocalStorage()
+                    mainRepository.getCityWeatherForAWeekFromLocalStorage()
                 )
             )
         }.start()

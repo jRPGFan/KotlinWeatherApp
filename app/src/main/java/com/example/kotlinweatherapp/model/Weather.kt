@@ -8,8 +8,8 @@ import kotlin.random.Random
 @Parcelize
 data class Weather(
     val city: City = getDefaultCity(),
-    val temperature: Int = 13,
-    val feelsLike: Int = 11,
+    var temperature: Int = 13,
+    var feelsLike: Int = 11,
     val conditions: String = "clear",
     val icon: String? = "bkn_n",
     val weatherForAWeek: List<WeatherForAWeek> = getCityWeatherForAWeekLocalSource(),
