@@ -38,6 +38,10 @@ class HistoryFragment : Fragment() {
         historyFragmentRecyclerview.adapter = adapter
         viewModel.historyLiveData.observe(viewLifecycleOwner, Observer { renderData(it) })
         viewModel.getAllHistory()
+
+        binding.sortByCity.setOnClickListener{
+            viewModel.getHistoryByCity(binding.cityEdit.text.toString())
+        }
     }
 
     private fun renderData(appState: AppState) {

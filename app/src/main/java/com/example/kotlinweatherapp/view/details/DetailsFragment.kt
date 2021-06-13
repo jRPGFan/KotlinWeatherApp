@@ -16,8 +16,7 @@ import com.example.kotlinweatherapp.model.Weather
 import com.example.kotlinweatherapp.model.weatherList
 import com.example.kotlinweatherapp.utilities.convertCelsiusToFahrenheit
 import com.example.kotlinweatherapp.utilities.showSnackbarNoAction
-import com.example.kotlinweatherapp.view.IS_CELSIUS
-import com.example.kotlinweatherapp.view.history.HistoryFragment
+import com.example.kotlinweatherapp.view.menu.IS_CELSIUS
 import com.example.kotlinweatherapp.view.notes.NoteFragment
 import com.example.kotlinweatherapp.viewmodel.AppState
 import com.example.kotlinweatherapp.viewmodel.DetailsViewModel

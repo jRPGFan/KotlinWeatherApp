@@ -28,4 +28,8 @@
     <string name="save_note">Save</string>
     <string name="delete_note">Delete</string>
     <string name="close_note">Close</string>
+    <string name="contacts">Contacts</string>
+    <string name="authorities">wololo.provider</string>
+    <string name="filter">Filter</string>
+    <string name="call">Call</string>
 </resources>

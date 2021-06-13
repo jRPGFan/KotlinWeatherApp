@@ -12,6 +12,10 @@ class LocalRepositoryImpl(
         return convertHistoryEntityToWeather(localDataSource.all())
     }
 
+    override fun getHistoryByCity(city: String): List<Weather> {
+        return convertHistoryEntityToWeather(localDataSource.getDataByCity(city))
+    }
+
     override fun saveEntity(weather: Weather) {
         localDataSource.insert(convertWeatherToEntity(weather))
     }

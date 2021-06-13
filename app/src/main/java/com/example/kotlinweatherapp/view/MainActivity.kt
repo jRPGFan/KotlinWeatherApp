@@ -10,6 +10,8 @@ import com.example.kotlinweatherapp.R
 import com.example.kotlinweatherapp.databinding.MainActivityBinding
 import com.example.kotlinweatherapp.view.history.HistoryFragment
 import com.example.kotlinweatherapp.view.main.MainFragment
+import com.example.kotlinweatherapp.view.menu.ContentProviderFragment
+import com.example.kotlinweatherapp.view.menu.SettingsFragment
 
 class MainActivity : AppCompatActivity() {
     private val binding: MainActivityBinding by lazy {
@@ -32,7 +34,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_history, menu)
+        menuInflater.inflate(R.menu.menu_bar, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -48,6 +50,13 @@ class MainActivity : AppCompatActivity() {
             R.id.menu_settings -> {
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.container, SettingsFragment.newInstance())
+                    .addToBackStack("")
+                    .commit()
+                true
+            }
+            R.id.menu_content_provider -> {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.container, ContentProviderFragment.newInstance())
                     .addToBackStack("")
                     .commit()
                 true
