@@ -32,4 +32,28 @@
     <string name="authorities">wololo.provider</string>
     <string name="filter">Filter</string>
     <string name="call">Call</string>
+    <string name="dialog_button_close">Close</string>
+    <string name="dialog_title_no_gps">No GPS access</string>
+    <string name="dialog_message_no_gps">Please allow GPS access if current location\'s weather is required</string>
+    <string name="dialog_title_gps_turned_off">GPS is turned off</string>
+    <string name="dialog_message_last_location_unknown">Location unknown.
+Please turn on the GPS for current location\'s weather</string>
+    <string name="dialog_message_last_known_location">Showing last known location.
+        Please turn on the GPS to show current location</string>
+    <string name="dialog_rationale_title">Geolocation access</string>
+    <string name="dialog_rationale_message">Information</string>
+    <string name="dialog_rationale_give_access">Grant access</string>
+    <string name="dialog_rationale_decline">Deny</string>
+    <string name="dialog_address_title">Your address</string>
+    <string name="dialog_address_get_weather">Get weather</string>
+    <string name="geolocation_weather">Geolocation Weather</string>
+    <string name="city_note">City Note</string>
+    <string name="search_city">Search City</string>
+    <string name="webview_ok">OK</string>
+    <string name="settings_item">Settings</string>
+    <string name="title_activity_google_maps">Map</string>
+    <string name="google_maps">Google Maps</string>
+    <string name="default_address">Red Square, 1, Moscow</string>
+    <string name="button_search_map">Search</string>
+    <string name="marker_start">Start</string>
 </resources>

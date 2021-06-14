@@ -3,7 +3,6 @@ package com.example.kotlinweatherapp.model
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 import java.time.DayOfWeek
-import java.time.LocalDate
 
 @Parcelize
 data class WeatherForAWeek(
@@ -11,9 +10,9 @@ data class WeatherForAWeek(
     val dayTemperature: Int = 0,
     val nightTemperature: Int = 0,
     val conditions: WeatherConditions = getRandomWeather()
-): Parcelable
+) : Parcelable
 
-fun getCityWeatherForAWeekLocalSource() : List<WeatherForAWeek> {
+fun getCityWeatherForAWeekLocalSource(): List<WeatherForAWeek> {
     return listOf(
         WeatherForAWeek(DayOfWeek.MONDAY, 25, 14),
         WeatherForAWeek(DayOfWeek.TUESDAY, 27, 17),
@@ -25,14 +24,14 @@ fun getCityWeatherForAWeekLocalSource() : List<WeatherForAWeek> {
     )
 }
 
-fun getCityWeatherForAWeekServer(city: String) : List<WeatherForAWeek> {
-    return listOf(
-        WeatherForAWeek(DayOfWeek.MONDAY, 25, 14),
-        WeatherForAWeek(DayOfWeek.TUESDAY, 25, 14),
-        WeatherForAWeek(DayOfWeek.WEDNESDAY, 25, 14),
-        WeatherForAWeek(DayOfWeek.THURSDAY, 25, 14),
-        WeatherForAWeek(DayOfWeek.FRIDAY, 25, 14),
-        WeatherForAWeek(DayOfWeek.SATURDAY, 25, 14),
-        WeatherForAWeek(DayOfWeek.SUNDAY, 25, 14),
-    )
-}
+//fun getCityWeatherForAWeekServer(city: String): List<WeatherForAWeek> {
+//    return listOf(
+//        WeatherForAWeek(DayOfWeek.MONDAY, 25, 14),
+//        WeatherForAWeek(DayOfWeek.TUESDAY, 25, 14),
+//        WeatherForAWeek(DayOfWeek.WEDNESDAY, 25, 14),
+//        WeatherForAWeek(DayOfWeek.THURSDAY, 25, 14),
+//        WeatherForAWeek(DayOfWeek.FRIDAY, 25, 14),
+//        WeatherForAWeek(DayOfWeek.SATURDAY, 25, 14),
+//        WeatherForAWeek(DayOfWeek.SUNDAY, 25, 14),
+//    )
+//}

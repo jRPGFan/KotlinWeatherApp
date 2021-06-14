@@ -8,8 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlinweatherapp.R
 import com.example.kotlinweatherapp.model.Weather
 
-class MainFragmentAdapter(private var onItemViewClickListener:
-                          MainFragment.OnItemViewClickListener?) :
+class MainFragmentAdapter(
+    private var onItemViewClickListener:
+    MainFragment.OnItemViewClickListener?
+) :
     RecyclerView.Adapter<MainFragmentAdapter.MainViewHolder>() {
     private var weatherData: List<Weather> = listOf()
 

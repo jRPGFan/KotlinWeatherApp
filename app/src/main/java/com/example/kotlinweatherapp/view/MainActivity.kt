@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import com.example.kotlinweatherapp.googlemaps.GoogleMapsFragment
 import com.example.kotlinweatherapp.R
 import com.example.kotlinweatherapp.databinding.MainActivityBinding
 import com.example.kotlinweatherapp.view.history.HistoryFragment
@@ -57,6 +58,13 @@ class MainActivity : AppCompatActivity() {
             R.id.menu_content_provider -> {
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.container, ContentProviderFragment.newInstance())
+                    .addToBackStack("")
+                    .commit()
+                true
+            }
+            R.id.menu_google_maps -> {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.container, GoogleMapsFragment.newInstance())
                     .addToBackStack("")
                     .commit()
                 true

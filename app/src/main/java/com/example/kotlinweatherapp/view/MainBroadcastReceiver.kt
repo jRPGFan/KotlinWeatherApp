@@ -11,7 +11,7 @@ class MainBroadcastReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         StringBuilder().apply {
             append("SYSTEM MESSAGE\n")
-            append("Action: ${intent?.action}")
+            append("Action: ${intent.action}")
             toString().also {
                 Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
             }

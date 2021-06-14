@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/daysContainer"
@@ -16,60 +15,60 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:background="@drawable/rain">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/DaysContainerDayOfWeek"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/recycler_item_padding"
-        android:textSize="@dimen/details_recycler_item_text_size"
-        android:textColor="@color/white"
-        android:textAlignment="center"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Monday" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/DaysContainerDayOfWeek"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/recycler_item_padding"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/details_recycler_item_text_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Monday" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/DaysContainerDay"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/recycler_item_padding"
-        android:text="@string/week_day_temperature"
-        android:textSize="@dimen/details_recycler_item_text_size"
-        android:textColor="@color/white"
-        android:textAlignment="center"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Day: +25"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/DaysContainerDay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/recycler_item_padding"
+            android:text="@string/week_day_temperature"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/details_recycler_item_text_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Day: +25" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/DaysContainerNight"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/recycler_item_padding"
-        android:text="@string/week_night_temperature"
-        android:textSize="@dimen/details_recycler_item_text_size"
-        android:textColor="@color/white"
-        android:textAlignment="center"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Night: +15"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/DaysContainerNight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/recycler_item_padding"
+            android:text="@string/week_night_temperature"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/details_recycler_item_text_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Night: +15" />
 
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/DaysContainerWeatherCondition"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/recycler_item_padding"
-        android:textSize="@dimen/details_recycler_item_text_size"
-        android:textColor="@color/white"
-        android:textAlignment="center"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Rain"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/DaysContainerWeatherCondition"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/recycler_item_padding"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/details_recycler_item_text_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Rain" />
 
     </LinearLayout>
 
@@ -77,8 +76,8 @@
         android:layout_width="@dimen/recycler_item_line_height"
         android:layout_height="240dp"
         android:background="@android:color/black"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@id/daysContainerLinearLayout"/>
+        app:layout_constraintStart_toEndOf="@id/daysContainerLinearLayout"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

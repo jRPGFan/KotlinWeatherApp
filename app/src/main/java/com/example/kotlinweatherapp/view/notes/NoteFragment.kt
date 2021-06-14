@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.kotlinweatherapp.R
 import com.example.kotlinweatherapp.databinding.CityNoteFragmentBinding
@@ -29,14 +28,14 @@ class NoteFragment : DialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = CityNoteFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.noteLiveData.observe(viewLifecycleOwner, Observer { renderData(it) })
+        viewModel.noteLiveData.observe(viewLifecycleOwner, { renderData(it) })
         viewModel.getNoteByCity(cityBundle)
 
         binding.saveNote.setOnClickListener {

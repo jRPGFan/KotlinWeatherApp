@@ -7,6 +7,7 @@
     android:background="@color/loadingBackground"
     android:visibility="gone"
     tools:visibility="visible">
+
     <ProgressBar
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"

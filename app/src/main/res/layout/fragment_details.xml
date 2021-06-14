@@ -15,9 +15,10 @@
             android:id="@+id/city_note_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/city_note"
+            android:src="@android:drawable/ic_dialog_info"
             app:layout_constraintEnd_toEndOf="parent"
-            android:src="@android:drawable/ic_dialog_info"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/headerIcon"

@@ -8,7 +8,7 @@ const val CITY = "city"
 const val TEMPERATURE = "temperature"
 
 @Entity
-data class HistoryEntity (
+data class HistoryEntity(
 
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,

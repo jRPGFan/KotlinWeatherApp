@@ -3,13 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/menu_history"
-        android:title="@string/menu_title_history"
         android:icon="@drawable/ic_history"
-        app:showAsAction="always"/>
+        android:title="@string/menu_title_history"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/menu_settings"
-        android:title="Settings"
         android:icon="@android:drawable/ic_menu_preferences"
-        app:showAsAction="always"
-        />
+        android:title="@string/settings_item"
+        app:showAsAction="always" />
 </menu>

@@ -18,7 +18,10 @@ class DetailsFragmentAdapter : RecyclerView.Adapter<DetailsFragmentAdapter.Detai
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DetailsFragmentAdapter.DetailsViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): DetailsFragmentAdapter.DetailsViewHolder {
 
         return DetailsViewHolder(
             LayoutInflater.from(parent.context)
@@ -36,17 +39,21 @@ class DetailsFragmentAdapter : RecyclerView.Adapter<DetailsFragmentAdapter.Detai
 
     inner class DetailsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind(weather: WeatherForAWeek) {
-            itemView.apply{
-            findViewById<TextView>(R.id.DaysContainerDayOfWeek).text =
-                weather.dayOfWeek.name
-            findViewById<TextView>(R.id.DaysContainerDay).text = String.format(
-                resources.getString(R.string.week_day_temperature), weather.dayTemperature.toString())
-            findViewById<TextView>(R.id.DaysContainerNight).text = String.format(
-                resources.getString(R.string.week_night_temperature), weather.nightTemperature.toString())
-            findViewById<TextView>(R.id.DaysContainerWeatherCondition).text =
-                weather.conditions.description
-            findViewById<LinearLayout>(R.id.daysContainerLinearLayout)
-                .setBackgroundResource(weather.conditions.resID)
+            itemView.apply {
+                findViewById<TextView>(R.id.DaysContainerDayOfWeek).text =
+                    weather.dayOfWeek.name
+                findViewById<TextView>(R.id.DaysContainerDay).text = String.format(
+                    resources.getString(R.string.week_day_temperature),
+                    weather.dayTemperature.toString()
+                )
+                findViewById<TextView>(R.id.DaysContainerNight).text = String.format(
+                    resources.getString(R.string.week_night_temperature),
+                    weather.nightTemperature.toString()
+                )
+                findViewById<TextView>(R.id.DaysContainerWeatherCondition).text =
+                    weather.conditions.description
+                findViewById<LinearLayout>(R.id.daysContainerLinearLayout)
+                    .setBackgroundResource(weather.conditions.resID)
             }
         }
     }

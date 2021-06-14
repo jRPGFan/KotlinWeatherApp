@@ -39,7 +39,7 @@ class ContentProviderExample : ContentProvider() {
         return null
     }
 
-    override fun insert(uri: Uri, values: ContentValues?): Uri? {
+    override fun insert(uri: Uri, values: ContentValues?): Uri {
         require(uriMatcher.match(uri) == URI_ALL) { "Wrong URI: $uri" }
         val historyDao = getHistoryDao()
         val entity = map(values)
@@ -64,7 +64,7 @@ class ContentProviderExample : ContentProvider() {
     override fun query(
         uri: Uri, projection: Array<String>?, selection: String?,
         selectionArgs: Array<String>?, sortOrder: String?
-    ): Cursor? {
+    ): Cursor {
         val historyDao: HistoryDao = getHistoryDao()
         val cursor = when (uriMatcher.match(uri)) {
             URI_ALL -> historyDao.getHistoryCursor()

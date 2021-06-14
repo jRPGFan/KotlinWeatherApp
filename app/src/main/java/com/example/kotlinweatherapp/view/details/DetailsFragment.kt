@@ -97,7 +97,8 @@ class DetailsFragment : Fragment() {
             }
             else -> {
                 binding.mainView.showSnackbarNoAction(
-                    getString(R.string.Unknown_Error), Snackbar.LENGTH_SHORT)
+                    getString(R.string.Unknown_Error), Snackbar.LENGTH_SHORT
+                )
             }
         }
     }

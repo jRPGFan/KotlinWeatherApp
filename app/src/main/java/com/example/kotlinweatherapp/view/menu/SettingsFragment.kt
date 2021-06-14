@@ -18,7 +18,7 @@ class SettingsFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = SettingsFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -44,6 +44,7 @@ class SettingsFragment : Fragment() {
         super.onDestroy()
         _binding = null
     }
+
     companion object {
         @JvmStatic
         fun newInstance() = SettingsFragment()

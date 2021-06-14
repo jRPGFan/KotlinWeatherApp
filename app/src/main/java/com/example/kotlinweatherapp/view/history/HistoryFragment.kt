@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.kotlinweatherapp.R
 import com.example.kotlinweatherapp.databinding.HistoryFragmentBinding
@@ -28,7 +27,7 @@ class HistoryFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = HistoryFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -36,10 +35,10 @@ class HistoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         historyFragmentRecyclerview.adapter = adapter
-        viewModel.historyLiveData.observe(viewLifecycleOwner, Observer { renderData(it) })
+        viewModel.historyLiveData.observe(viewLifecycleOwner, { renderData(it) })
         viewModel.getAllHistory()
 
-        binding.sortByCity.setOnClickListener{
+        binding.sortByCity.setOnClickListener {
             viewModel.getHistoryByCity(binding.cityEdit.text.toString())
         }
     }

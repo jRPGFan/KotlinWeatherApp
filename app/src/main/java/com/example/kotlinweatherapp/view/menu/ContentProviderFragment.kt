@@ -12,7 +12,6 @@ import android.os.Bundle
 import android.provider.ContactsContract
 import android.view.*
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.kotlinweatherapp.R
@@ -33,7 +32,7 @@ class ContentProviderFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = ContactsFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -51,7 +50,12 @@ class ContentProviderFragment : Fragment() {
         }
 
     private fun requestPermission() {
-        requestPermissions(arrayOf(Manifest.permission.READ_CONTACTS, Manifest.permission.CALL_PHONE), REQUEST_CODE)
+        requestPermissions(
+            arrayOf(
+                Manifest.permission.READ_CONTACTS,
+                Manifest.permission.CALL_PHONE
+            ), REQUEST_CODE
+        )
     }
 
     override fun onRequestPermissionsResult(
