@@ -20,7 +20,7 @@ class MainViewModel(private val liveDataToObserve: MutableLiveData<AppState> = M
 
         Thread {
             sleep(1000)
-            liveDataToObserve.postValue(AppState.Success(if (isRussian)
+            liveDataToObserve.postValue(AppState.SuccessCityList(if (isRussian)
                 mainRepositoryImpl.getWeatherFromLocalStorageRus() else
                 mainRepositoryImpl.getWeatherFromLocalStorageWorld()))
         }.start()

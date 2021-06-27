@@ -3,17 +3,15 @@ package com.example.kotlinweatherapp.utilities
 import com.example.kotlinweatherapp.model.*
 import com.example.kotlinweatherapp.room.HistoryEntity
 
-fun convertDtoToModel(weatherDTO: WeatherDTO): List<Weather> {
+fun convertDtoToModel(weatherDTO: WeatherDTO): Weather {
     val fact: FactDTO = weatherDTO.fact!!
-    return listOf(
-        Weather(
+    return Weather(
             getDefaultCity(),
             fact.temp!!,
             fact.feels_like!!,
             fact.condition!!,
             fact.icon
         )
-    )
 }
 
 fun convertHistoryEntityToWeather(entityList: List<HistoryEntity>): List<Weather> {

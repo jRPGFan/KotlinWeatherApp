@@ -11,14 +11,14 @@ private val historyRepository: LocalRepository = LocalRepositoryImpl(getHistoryD
  ) :ViewModel() {
      fun getAllHistory() {
          historyLiveData.value = AppState.Loading
-         historyLiveData.value = AppState.Success(historyRepository.getAllHistory())
+         historyLiveData.value = AppState.SuccessHistory(historyRepository.getAllHistory())
      }
 
     fun getHistoryByCity(city: String) {
         historyLiveData.value = AppState.Loading
         if (city == "")
-            historyLiveData.value = AppState.Success(historyRepository.getAllHistory())
+            historyLiveData.value = AppState.SuccessHistory(historyRepository.getAllHistory())
         else
-            historyLiveData.value = AppState.Success(historyRepository.getHistoryByCity(city))
+            historyLiveData.value = AppState.SuccessHistory(historyRepository.getHistoryByCity(city))
     }
  }

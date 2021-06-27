@@ -39,7 +39,7 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.RecyclerItemViewHolde
         fun bind(data: Weather) {
             if (layoutPosition != RecyclerView.NO_POSITION) {
                 itemView.recyclerViewItem.text =
-                    String.format("%s %d %s", data.city.city, data.temperature, data.conditions)
+                    String.format("%s %s %s", data.city.city, data.temperature.toString(), data.conditions)
                 itemView.setOnClickListener {
                     Toast.makeText(
                         itemView.context, "on click: ${data.city.city}",

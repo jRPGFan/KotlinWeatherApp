@@ -15,7 +15,7 @@ import java.io.IOException
 class RemoteDataSource {
 
     private val weatherApi = Retrofit.Builder()
-        .baseUrl("https://api.weather.yandex.ru/")
+        .baseUrl("https://api.openweathermap.org/")
         .addConverterFactory(
             GsonConverterFactory.create(
                 GsonBuilder().setLenient().create()
@@ -25,7 +25,7 @@ class RemoteDataSource {
         .build().create(WeatherAPI::class.java)
 
     fun getWeatherDetails(lat: Double, lon: Double, callback: Callback<WeatherDTO>) {
-        weatherApi.getWeather(BuildConfig.WEATHER_API_KEY, lat, lon).enqueue(callback)
+        weatherApi.getWeather(lat, lon, "minutely, alerts", "metric", BuildConfig.OPEN_WEATHER_API_KEY).enqueue(callback)
     }
 
     private fun createOkHttpClient(interceptor: Interceptor): OkHttpClient {

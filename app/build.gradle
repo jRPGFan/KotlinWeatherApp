@@ -30,22 +30,46 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+
+        debug {
+            versionNameSuffix "-debug"
+        }
+
+        staging {
+            initWith debug
+            versionNameSuffix "-staging"
+        }
     }
 
     buildTypes.each {
         Properties properties = new Properties()
         properties.load(project.rootProject.file("apikey.properties").newDataInputStream
                 ())
-        def apiKey = properties.getProperty("yandex_weather_api_key", "")
-        it.buildConfigField "String", "WEATHER_API_KEY", apiKey
+        def yandexApiKey = properties.getProperty("yandex_weather_api_key", "")
+        it.buildConfigField "String", "YANDEX_WEATHER_API_KEY", yandexApiKey
+        def openWeatherApiKey = properties.getProperty("open_weather_api_key", "")
+        it.buildConfigField "String", "OPEN_WEATHER_API_KEY", openWeatherApiKey
     }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+
+    flavorDimensions 'api'
+    productFlavors {
+        yandex {
+            dimension 'api'
+            versionNameSuffix '.yandex'
+        }
+        openweather {
+            dimension 'api'
+            versionNameSuffix '.openweather'
+        }
     }
 }
 
@@ -57,7 +81,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
     implementation 'com.google.android.gms:play-services-maps:17.0.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    implementation 'com.google.firebase:firebase-messaging:21.0.1'
+    implementation 'com.google.firebase:firebase-messaging:22.0.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

@@ -45,7 +45,7 @@ class HistoryFragment : Fragment() {
 
     private fun renderData(appState: AppState) {
         when (appState) {
-            is AppState.Success -> {
+            is AppState.SuccessHistory -> {
                 binding.historyFragmentRecyclerview.visibility = View.VISIBLE
                 binding.includedLoadingLayout.loadingLayout.visibility = View.GONE
                 adapter.setData(appState.weatherData)

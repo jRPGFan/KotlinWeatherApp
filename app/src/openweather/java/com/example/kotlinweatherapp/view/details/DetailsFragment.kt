@@ -20,8 +20,10 @@ import com.example.kotlinweatherapp.view.menu.IS_CELSIUS
 import com.example.kotlinweatherapp.view.notes.NoteFragment
 import com.example.kotlinweatherapp.viewmodel.AppState
 import com.example.kotlinweatherapp.viewmodel.DetailsViewModel
+import com.github.twocoffeesoneteam.glidetovectoryou.GlideApp
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_details.*
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.openweather.fragment_details.*
 
 class DetailsFragment : Fragment() {
 
@@ -75,7 +77,7 @@ class DetailsFragment : Fragment() {
             is AppState.Success -> {
                 binding.mainView.visibility = View.VISIBLE
                 binding.includedLoadingLayout.loadingLayout.visibility = View.GONE
-                setWeather(appState.weatherData[0])
+                setWeather(appState.weatherData)
             }
             is AppState.Loading -> {
                 binding.mainView.visibility = View.GONE
@@ -130,16 +132,17 @@ class DetailsFragment : Fragment() {
             )
 
             weather.icon?.let {
-                val svgImageLoader = ImageLoader.Builder(requireContext())
-                    .componentRegistry {
-                        add(coil.decode.SvgDecoder(requireContext()))
-                    }
-                    .build()
+//                val svgImageLoader = ImageLoader.Builder(requireContext())
+//                    .componentRegistry {
+//                        add(coil.decode.SvgDecoder(requireContext()))
+//                    }
+//                    .build()
 
-                weatherIcon.load(
-                    "https://yastatic.net/weather/i/icons/blueye/color/svg/${it}.svg",
-                    svgImageLoader
-                )
+//                weatherIcon.load(
+//                    "https://yastatic.net/weather/i/icons/blueye/color/svg/${it}.svg",
+//                    svgImageLoader
+//                )
+                weatherIcon.load("https://openweathermap.org/img/wn/${it}@2x.png")
             }
 
             weatherDescription.text = weather.conditions
@@ -147,7 +150,8 @@ class DetailsFragment : Fragment() {
             viewModel.getLiveData().observe(viewLifecycleOwner, {
                 renderWeekData(it)
             })
-            viewModel.getWeekWeatherFromLocalSource()
+            adapter.setWeekWeather(weather.weatherForAWeek)
+            //viewModel.getWeekWeatherFromLocalSource()
         }
     }
 
@@ -164,6 +168,7 @@ class DetailsFragment : Fragment() {
 
     private fun renderWeekData(appState: AppState) {
         when (appState) {
+            is AppState.Success -> {}
             is AppState.SuccessWeek -> {
                 binding.includedLoadingLayout.loadingLayout.visibility = View.GONE
                 adapter.setWeekWeather(appState.weatherForAWeek)
