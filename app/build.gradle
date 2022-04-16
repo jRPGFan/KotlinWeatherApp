@@ -43,8 +43,7 @@ android {
 
     buildTypes.each {
         Properties properties = new Properties()
-        properties.load(project.rootProject.file("apikey.properties").newDataInputStream
-                ())
+        properties.load(project.rootProject.file("apikey.properties").newDataInputStream())
         def yandexApiKey = properties.getProperty("yandex_weather_api_key", "")
         it.buildConfigField "String", "YANDEX_WEATHER_API_KEY", yandexApiKey
         def openWeatherApiKey = properties.getProperty("open_weather_api_key", "")
@@ -97,4 +96,6 @@ dependencies {
     implementation 'com.github.corouteam:GlideToVectorYou:v2.0.0'
     implementation 'androidx.room:room-runtime:2.3.0'
     kapt 'androidx.room:room-compiler:2.3.0'
+    implementation 'com.beust:klaxon:5.5'
+    implementation 'com.google.maps.android:android-maps-utils:2.3.0'
 }

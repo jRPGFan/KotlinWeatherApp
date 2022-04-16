@@ -10,16 +10,27 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
+import com.beust.klaxon.JsonArray
+import com.beust.klaxon.JsonObject
+import com.beust.klaxon.Parser
 import com.example.kotlinweatherapp.R
 import com.example.kotlinweatherapp.databinding.FragmentGoogleMapsMainBinding
+import com.example.kotlinweatherapp.model.car.GoogleMapsCar
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import com.google.maps.android.PolyUtil
 import kotlinx.android.synthetic.main.fragment_google_maps_main.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.io.IOException
+import java.lang.StringBuilder
+import java.net.URL
 
 class GoogleMapsFragment : Fragment() {
 
@@ -27,6 +38,7 @@ class GoogleMapsFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var map: GoogleMap
     private val markers: ArrayList<Marker> = arrayListOf()
+    private lateinit var googleMapsCar: GoogleMapsCar
 
     private val callback = OnMapReadyCallback { googleMap ->
         map = googleMap
@@ -39,8 +51,10 @@ class GoogleMapsFragment : Fragment() {
             getAddressAsync(latLng)
             addMarkerToArray(latLng)
             drawLine()
+            getRoute()
         }
         activateMyLocation(googleMap)
+        googleMapsCar = GoogleMapsCar(map)
     }
 
     override fun onCreateView(
@@ -57,6 +71,9 @@ class GoogleMapsFragment : Fragment() {
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
         initSearchByAddress()
+        binding.buttonPlaceCar.setOnClickListener { placeCarOnMap() }
+        binding.buttonDrive.setOnClickListener { startCar() }
+        binding.buttonStop.setOnClickListener { stopCar() }
     }
 
     private fun getAddressAsync(location: LatLng) {
@@ -105,6 +122,53 @@ class GoogleMapsFragment : Fragment() {
                     .width(5f)
             )
         }
+    }
+
+    private fun getRoute() : List<LatLng>? {
+        if (markers.size < 2) {
+            Toast.makeText(requireContext(), "Place a marker first!", Toast.LENGTH_SHORT).show()
+            return null
+        }
+
+        val url = getURL(markers[0].position, markers[markers.size - 1].position)
+        var decodedPoints: List<LatLng>? = null
+
+        GlobalScope.launch(context = Dispatchers.IO) {
+            val result = URL(url).readText()
+            val parser = Parser()
+            val stringBuilder = StringBuilder(result)
+            val json: JsonObject = parser.parse(stringBuilder) as JsonObject
+            val routes = json.array<JsonObject>("routes")
+            val points = routes!!["legs"]["steps"][0] as JsonArray<JsonObject>
+            val polylinePoints = points.flatMap {
+                PolyUtil.decode(it.obj("polyline")?.string("points")!!) }
+            decodedPoints = polylinePoints
+        }
+
+        return decodedPoints
+    }
+
+    private fun getURL(from: LatLng, to: LatLng): String {
+        val originationPoint = "origin" + from.latitude + "," + from.longitude
+        val destinationPoint = "destination" + to.latitude + "," + to.longitude
+        val sensor = "sensor=false"
+        val queryParams = "$originationPoint&$destinationPoint&$sensor"
+        return "https://maps.googleapis.com/maps/api/directions/json?$queryParams"
+    }
+
+    private fun placeCarOnMap() {
+        if (markers.size > 0)
+            googleMapsCar.placeCarOnMap(markers[0])
+        else
+            Toast.makeText(requireContext(), "Place a marker first!", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun startCar() {
+        getRoute()?.size ?: googleMapsCar.carStart(getRoute()!!)
+    }
+
+    private fun stopCar() {
+        googleMapsCar.stop()
     }
 
     private fun initSearchByAddress() {
